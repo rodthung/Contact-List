@@ -1,0 +1,66 @@
+   <div>
+        <h1>Add Contact List</h1>
+        <form class="form-inline">
+            <div class="form-group">
+                <label>Firstname: </label>
+                <input type="text" ng-model="firstname">
+            </div>
+            <div class="form-group">
+                <label>Lastname: </label>
+                <input type="text" ng-model="lastname">
+            </div>
+            <div class="form-group">
+                <label>Tel: </label>
+                <input type="text" ng-model="telephone">
+            </div>
+            <button class="btn btn-default" ng-click="addContact()">Add</button>
+        </form>
+        <h1>Contact List</h1> 
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Telephone</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items" assign-from-child="rowform" to-parent="rowform[{{$index}}]">
+                    <td>{{ item.ID }}</td>
+                    <td>
+                        <span editable-text="item.Firstname" e-name="Firstname" e-form="rowform" id="span1" editable-text="item.Firstname">
+                        {{ item.Firstname || "empty" }}
+                        </span>
+                    </td>
+                    <td>
+                        <span editable-text="item.Lastname" e-name="Lastname" e-form="rowform" editable-text="item.Lastname">
+                            {{ item.Lastname }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span editable-text="item.Telephone" e-name="Telephone" e-form="rowform" editable-text="item.Telephone">
+                            {{ item.Telephone }}
+                        </span>
+                    </td>
+                    <td>
+                        <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline">
+                            <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary" ng-click="editContact(item.ID)">
+                                Save
+                            </button>
+                            <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-defualt">
+                                Cancle
+                            </button>
+                        </form>
+                        <div class="buttons" ng-show="!rowform.$visible">
+                            <button class="btn btn-primary" ng-click="rowform.$show()">Edit</button>
+                            <button class="btn btn-danger" ng-click="deleteContact(item.ID)">Delete</button>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
